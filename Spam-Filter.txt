@@ -1,0 +1,21 @@
+/*
+function sendEmail() {
+  var recipient = "elena.bezan@gmail.com";
+  var subject = "Nekaj lepega";
+  var body = "Luzer si";
+
+  GmailApp.sendEmail(recipient, subject, body);
+}
+*/
+
+function readMyMail() {
+  var threads = GmailApp.getInboxThreads(0,1);
+  if (threads.length > 0) {
+    var message = threads[0].getMessages()[0];
+    var subject = message.getSubject();
+    var sender = message.getFrom();
+    var body = message.getBody();
+    var time = message.getDate();
+    Logger.log("Latest email: " + subject + " with message " + body + " from " + sender + " at " + time);
+  }
+}
