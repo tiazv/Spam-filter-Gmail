@@ -1,21 +1,161 @@
-/*
+//spam = 1
+//ham = 0
+function main() {
+
+  const telo = readEmail();
+  //Logger.log("Telo: " + telo);
+  //sendEmail();
+  var csvData = importCSVFromDrive("1GNnHMSi6XvJwXFPK3-gbgE51ZDy8-0Bo", "1icNpl41Pw2DV5Kv5CMQpdUOm6IYNqvn_fYTglkw-mPw");
+  var range = csvData.range;
+  var values = csvData.values;
+  //Logger.log(csvData);
+  Logger.log(klicem());
+}
+
+function readEmail(){
+  var threads = GmailApp.getInboxThreads(0,1);
+  if (threads.length > 0) {
+    var message = threads[0].getMessages()[0];
+    var subject = message.getSubject();
+    var sender = message.getFrom();
+    const body = message.getPlainBody();
+    var time = message.getDate();
+    //Logger.log("Zadnji dobljen email: " + subject + " s sporočilom " + body + " od " + sender + " ob " + time);
+    return body;
+  }
+}
+
 function sendEmail() {
   var recipient = "elena.bezan@gmail.com";
   var subject = "Nekaj lepega";
   var body = "Luzer si";
 
   GmailApp.sendEmail(recipient, subject, body);
+  Logger.log("Poslala email osebi: " + recipient + ", subject: " + subject + ", body: " + body);
 }
-*/
 
-function readMyMail() {
-  var threads = GmailApp.getInboxThreads(0,1);
-  if (threads.length > 0) {
-    var message = threads[0].getMessages()[0];
-    var subject = message.getSubject();
-    var sender = message.getFrom();
-    var body = message.getBody();
-    var time = message.getDate();
-    Logger.log("Latest email: " + subject + " with message " + body + " from " + sender + " at " + time);
+function importCSVFromDrive(fileId, sheetId) {
+  var file = DriveApp.getFileById(fileId);
+  var csvData = file.getBlob().getDataAsString();
+  var csv = Utilities.parseCsv(csvData);
+  //Logger.log(csv); //ta je pravi
+  var values = csv.map(function(row) {
+    return [row[0]], [row[1]];
+  });
+  var spreadsheet = SpreadsheetApp.openById(sheetId);
+  var sheet = spreadsheet.getSheetByName("Spam");
+  if(!sheet){
+    sheet = spreadsheet.insertSheet("spam");
   }
+  sheet.getRange(1, 1, values.length, values[0].length).setValues(values);
+  //Logger.log(spreadsheet)
+  //Logger.log(csv);
+ return { range: sheet.getDataRange(), values: values };
 }
+
+function klicem() {
+  var file = DriveApp.getFileById("1GNnHMSi6XvJwXFPK3-gbgE51ZDy8-0Bo");
+  var csvData = file.getBlob().getDataAsString();
+  var dataset = Utilities.parseCsv(csvData);
+  //const dataset = importCSVFromDrive("1GNnHMSi6XvJwXFPK3-gbgE51ZDy8-0Bo", "1icNpl41Pw2DV5Kv5CMQpdUOm6IYNqvn_fYTglkw-mPw");
+  Logger.log(dataset);
+  //dataset.shift(); // Remove header row
+  
+  //const shuffledDataset = shuffleArray(dataset);
+  if (!Array.isArray(dataset)) {
+  throw new TypeError('dataset is not an array');
+}
+  const pod = dataset.map(row => row[1]); // podatki
+  const rez = dataset.map(row => row[0]); // rezultati
+  
+  const testSize = 0.1;
+  const splitIndex = Math.floor(pod.length * (1 - testSize));
+  const pod_ucna = pod.slice(0, splitIndex);
+  const pod_test = pod.slice(splitIndex);
+  const rez_ucna = rez.slice(0, splitIndex);
+  const rez_test = rez.slice(splitIndex);
+  Logger.log(pod_test.length);
+
+  const testirane = classifier.train(pod_ucna, rez_ucna);
+  //DO SEM DELA
+  const napovedi = pod_test.map(row => classifier.predict(row));
+  
+  // KAKOVOST
+  const matrikaZmede = getConfusionMatrix(rez_test, napovedi);
+  Logger.log("Matrika zmede: \n" + matrikaZmede[0] + "\n" + matrikaZmede[1]);
+}
+
+
+function getConfusionMatrix(dejansko, napovedano) {
+  const TP = dejansko.filter((d, i) => d === 1 && napovedano[i] === 1).length;
+  const TN = dejansko.filter((d, i) => d === 0 && napovedano[i] === 0).length;
+  const FP = dejansko.filter((d, i) => d === 0 && napovedano[i] === 1).length;
+  const FN = dejansko.filter((d, i) => d === 1 && napovedano[i] === 0).length;
+  return [[TN, FP], [FN, TP]];
+}
+
+const classifier = {
+  train(pod, rez) {
+    const st_parametrov = 1;
+    const st_primerkov = 558;
+    const classes = [...new Set(rez)]; // 0 in 1
+    const st_razredov = classes.length;
+    Logger.log(classes);
+
+    //vse nastavim na nic
+    const povprecje = Array.from({ length: st_razredov }, () =>
+      Array.from({ length: st_parametrov }, () => 0)
+    ); //aritmeticna sredina
+    const odklon = Array.from({ length: st_razredov }, () =>
+      Array.from({ length: st_parametrov }, () => 0)
+    ); //standardni odklon
+    const prejsnje = Array.from({ length: st_razredov }, () => 0); //priors
+
+    for (let i = 0; i < st_razredov; i++) {
+      const razred = classes[i];
+      const pod_razred = pod.filter((_, index) => rez[index] === razred); //primerki iz tega razreda
+      for (let j = 0; j < st_parametrov; j++) {
+        povprecje[i][j] = pod_razred.map((row) => row[j])
+          .reduce((a, b) => a + b, 0) / pod_razred.length;
+        odklon[i][j] = pod_razred.map((row) => Math.pow(row[j] - povprecje[i][j], 2))
+          .reduce((a, b) => a + b, 0) / pod_razred.length;
+      }
+      prejsnje[i] = pod_razred.length / st_primerkov;
+      Logger.log(prejsnje);
+    }
+
+    return { povprecje, odklon, prejsnje, classes };
+},
+
+  gostotaVerjetnosti(i, podatek) {
+    const povprecje = this._povprecje[i];
+    const odklon = this._odklon[i];
+    const zgoraj = Math.exp(-((podatek - povprecje) ** 2) / (2 * odklon));
+    const spodaj = Math.sqrt(2 * Math.PI * odklon);
+    const rezultat = zgoraj / spodaj;
+    return rezultat;
+},
+
+  napovej(podatek, prejsnje) {
+    var naslednje = [];
+    for (var i = 0; i < 3; i++) {
+      var prejsnja = Math.log(prejsnje[i]); //KAK DOSTOPAM DO PREJSNJE
+      var naslednja = 0;
+      for (var j = 0; j < podatek.length; j++) {
+        naslednja += Math.log(this.gostotaVerjetnosti(i, podatek[j])); //sum namesto multiply ker mas log
+      }
+      naslednja += prejsnja;
+      naslednje.push(naslednja); //posterior
+    }
+    return this.classes[naslednje.indexOf(Math.max(...naslednje))];
+},
+
+  predict (pod) {
+    Logger.log(pod);
+    var napovedano = [];
+    for (var i = 0; i < pod.length; i++) {
+      napovedano.push(this.napovej(pod[i]), this.prejsnje);
+    }
+    return napovedano;
+  }
+};
