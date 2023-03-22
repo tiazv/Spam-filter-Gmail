@@ -1,0 +1,13 @@
+INFO O PROJEKTNI:
+
+BAYES IN SPAM VIDEO:
+	Za kreiranje bayes spam filtra sem nasla video (zraven sem dobila tud zbirko): 
+		https://www.youtube.com/watch?v=2sXAYoPIz3A&ab_channel=NickStugard
+	Zraven sem dobila tud zbirko/ bazo spam in ham vsebin mailov (spam.csv).
+	Dodatni videji ki sem jih se nalsa so:
+		https://www.youtube.com/watch?v=cNLPt02RwF0&ab_channel=ComputerScience
+		(
+		https://www.youtube.com/watch?v=O2L2Uv9pdDA&ab_channel=StatQuestwithJoshStarmer
+		https://www.youtube.com/watch?v=w-sqq-6Lp6U&list=PLOk1no-OaqO95modXHKAmXpvhqPfaf5jY&index=1&t=34s&ab_channel=JonathanEdwards
+		https://www.youtube.com/watch?v=N0EMae_WxIs&list=PLOk1no-OaqO95modXHKAmXpvhqPfaf5jY&index=2&ab_channel=BobPellerin
+		)
