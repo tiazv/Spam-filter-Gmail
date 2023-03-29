@@ -43,12 +43,12 @@ model = MultinomialNB()
 model.fit(pod_train_count, rez_train)
 
 #ham example for prediction
-email_ham = ["meeting reward click"]
+email_ham = ["reward money click movie energy meeting"]
 email_ham_count = cv.transform(email_ham)
 email_ham_test = model.predict(email_ham_count)
 
 #spam example for prediction
-email_spam = ["reward money click movie energy meeting"]
+email_spam = ["meeting reward click"]
 email_spam_count = cv.transform(email_spam)
 email_spam_test = model.predict(email_spam_count)
 
@@ -84,3 +84,13 @@ print(f"Ham percentage: {ham_percent:.2f}%")
 
 print(f"Spam percentage1: {spam_percent1:.2f}%")
 print(f"Ham percentage1: {ham_percent1:.2f}%")
+
+def predictSpam(message):
+    #message = parse(message) to se se more menda napisat sam mogoce tud ne glede na to kak bo se bral mail
+    email_spam1 = ["meeting reward click"]
+    email_spam_count1 = cv.transform(email_spam1)
+    email_spam_test_probs1 = model.predict_proba(email_spam_count1)[0]
+    spam_percent1_1 = email_spam_test_probs1[1] * 100
+    ham_percent1_1 = email_spam_test_probs1[0] * 100
+    return spam_percent1_1, ham_percent1_1
+
