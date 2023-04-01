@@ -70,3 +70,13 @@ spam_percent = result_probs[1] * 100
 ham_percent = result_probs[0] * 100
 print(f"Spam percentage: {spam_percent:.2f} %")
 print(f"Ham percentage: {ham_percent:.2f} %")
+
+def predictSpam(message):
+    #message = parse(message) to se se more menda napisat sam mogoce tud ne glede na to kak bo se bral mail
+    email_spam1 = ["meeting reward click"]
+    email_spam_count1 = cv.transform(email_spam1)
+    email_spam_test_probs1 = model.predict_proba(email_spam_count1)[0]
+    spam_percent1_1 = email_spam_test_probs1[1] * 100
+    ham_percent1_1 = email_spam_test_probs1[0] * 100
+    return spam_percent1_1, ham_percent1_1
+
