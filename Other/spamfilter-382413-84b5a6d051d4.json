@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "spamfilter-382413",
+  "private_key_id": "84b5a6d051d48cf8e9b7645c3233ec021b9c3b7d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDmqmelag7JNKR7\ncTS+8LEn4Ysxsdq7xEMaQGrs/LxBEyCcGmwqIMNU+NLltKe05LjNNbTbGkMLksYr\n2Xwt4PwgE9AUCdFlaYcOI9VXJ3ljtmdQEsyWvoCqWUEUbQPr95WW98+fLgHKw0CB\n5lQYKK/pKxvDjAysjufwEW6OfgiTiRBNBdZHnqZ8Peh+jVyqWkp0JvhN4y6HHlui\nxO57BxyQajGowAL7J9bjOVAbnYrz+xzBn0+YyUPTthpjOmtVZPvvbSs0W8RtpeQ5\nQx1YpNjOOApxJK2Qy8gLHHXGMJkCmE9caWdTM8hB3g0Phts0VtZMhx680npFmdYx\nQMMpWU1FAgMBAAECggEAOQLJF0M9YFGYjcIPLVpEDv1Z7/BrhZkelLBzPRvCU7ss\nhiipr0flv2y4g3nBMZ6OZnntt3GoPIYMYO4iGRzQdAUxmqJKlOweK0qEAkSJZjHB\nGzNqSZ/QIUpqIWhIXdwVpvic4lT2sGzN1s1c35O+1ryG4jANOeEgRl+omaNg70Wr\nDBYeXP7h8uqFFRu4V8yEEE76M6LR3kwgtSByCTROGWrvqaHkeXyDi79DHJ1qdTWq\n5brWNy5lkeHp495PAMBbQgOpLwkbmwMPYtF9BzgEAYFOekfH6a49tNVwiDolG2Ow\nSvbCFojODjl3Z0seVZe4S03xwMw0h4lZeDRi2qb1yQKBgQD6ALcuAZ30hJZ7qYID\nFLpgw30l381a9jnDBe+JLWoUAi/LyfIsU3jrtBlaj27HsBqvVQHDNXdnkGoMBCAT\nh/GyHT0eo5ytYkY7eNDVpGyntU7+X85zQyyxBmCmD4rZG3JNuYBzRkjScrDmlEjb\nRQSyXLGo2M4SCslomEZojsjFDwKBgQDsMvBEJpBXqgPpoTmKBE4kmI+cNg7pdAi9\no2vuJLTIXMaI0hq1ojMG/uiZOFkBvvWioajFOGq5hTWuQKD7nUnhcVr0d+3MOXLn\nFhexC4nJVUMyIZx9u76Ez4SRs8Kmj1uu590lh4vG0oC633cvnxCuJWg0IfCJK5Sj\n0FPKSwIQawKBgHtzYwEa107pMg36lDLFR4uEvQW40AT81WUSR0hr3pfmxIdTP3zX\n8zwhAOwRK9j7gxHVXjtw6XeAfn1UhCpg1N7pRUcd775GavvvGuCEgwsFou5FjQKp\nxyXbSlp2DlBLF1R+J4nEySzyaZxS2O8906Xn0+rWtFuAbBh0KUB0UXvNAoGBAImQ\nLUDz2NNFsJusC4/na/+CXvmSvmKW8tRHzn9XH3cmGXbsLyQkAGYNpjg+ihArQHJk\nhp++eOHtxFLlTxzcAYBsfZWuF2/+8X3G7yts1eXNY6JZ0wOjiZVeKw6UzEQncDVQ\n0wqdg/na9aBgr9CrapKSNLtQHQA2wo4ZsgM6ZkxbAoGAG/A9wqwi62cc1/bW2aAP\n4HcTQF3sPkWjnF7YCVSqQMOpLq8b5hzApN5/AjF8bNTxjlKfYmuqLo4F75UxVOgN\nHYvx1qQDSO9td+fO/4vEf5sHK66jIgCzTWoqHXDwVj+w26hjktq4vXYDkiYGvyts\n71LnMGmJhWlkVR5KIbxq2N8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "spamfilter@spamfilter-382413.iam.gserviceaccount.com",
+  "client_id": "117622293806089131140",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/spamfilter%40spamfilter-382413.iam.gserviceaccount.com"
+}

@@ -11,3 +11,19 @@ BAYES IN SPAM VIDEO:
 		https://www.youtube.com/watch?v=w-sqq-6Lp6U&list=PLOk1no-OaqO95modXHKAmXpvhqPfaf5jY&index=1&t=34s&ab_channel=JonathanEdwards
 		https://www.youtube.com/watch?v=N0EMae_WxIs&list=PLOk1no-OaqO95modXHKAmXpvhqPfaf5jY&index=2&ab_channel=BobPellerin
 		)
+
+KAK RUNNAS:
+	streamlit run SpamDetector.py
+
+PREDSTAVITEV:
+	Rebeka (2 min):
+		- kaj je phishing (omeni tudi spam ham)
+		- kaj je bila nasa naloga (extension ampak imamo aplikacijo)
+	Elena (3 min):
+		- kaj smo uporabljale
+		- struggles (apps script, velikost baze, api...)
+		- bayes - SpamFilter.py
+	Tia (3 min):
+		- gui koda - SpamDetector.py
+		- delovanje aplikacije
+		- mnenje

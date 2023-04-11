@@ -1,10 +1,14 @@
+#streamlit run SpamDetector.py
 import pickle
 import streamlit as st
 from win32com.client import Dispatch
+import pythoncom
 
-def speak(prediction):
-    speak = Dispatch(("SAPI.SpVoice"))
-    speak.Speak(prediction)
+pythoncom.CoInitialize()
+
+#def speak(prediction):
+    #speak = Dispatch(("SAPI.SpVoice"))
+    #speak.Speak(prediction)
 
 model = pickle.load(open("spam.pkl", "rb"))
 cv = pickle.load(open("vectorizer.pkl", "rb"))
@@ -21,7 +25,6 @@ def main():
         spam_percent = result_probs[1] * 100
         ham_percent = result_probs[0] * 100
         if result == 1:
-            speak("This is spam mail")
             if spam_percent > 60:
             	st.error("This is spam mail")
             	st.error("Spam percentage: {:.2f} %".format(spam_percent))
@@ -30,8 +33,8 @@ def main():
             	st.error("This is spam mail")
             	st.warning("Spam percentage: {:.2f} %".format(spam_percent))
             	st.warning("Ham percentage: {:.2f} %".format(ham_percent))
+            #speak("This is spam mail")
         else:
-            speak("This is ham mail")
             if ham_percent > 60:
             	st.success("This is ham mail")
             	st.success("Spam percentage: {:.2f} %".format(spam_percent))
@@ -40,6 +43,7 @@ def main():
             	st.success("This is ham mail")
             	st.warning("Spam percentage: {:.2f} %".format(spam_percent))
             	st.warning("Ham percentage: {:.2f} %".format(ham_percent))
+            #speak("This is ham mail")
 
 
 main()

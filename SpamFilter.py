@@ -1,4 +1,3 @@
-#import packages
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -10,13 +9,7 @@ import pickle
 data = pd.read_csv("spam.csv")
 data = data.sample(frac=1).reset_index(drop=True)
 
-#add new column
-data["spam"] = data["Category"].apply(lambda x: 1 if x == "spam" else 0)
-
-#PRINT: how many spam/ham, how many different, most common, how many most common
-#print(data)
-#print(data.groupby("Category").describe())
-#print("------------------------------------------------")
+data["spam"] = data["Category"].apply(lambda x: 1 if x == "spam" else 0) #dodaj novi stolpec s števkami
 
 cv = CountVectorizer()
 
@@ -24,19 +17,13 @@ pod = data.Message #content
 rez = data.spam #spam or ham
 pod_train, pod_test, rez_train, rez_test = train_test_split(pod, rez, test_size=.01)
 
-#PRINT: inspect data
 pod = cv.fit(pod)
-print(pod_train)
-print(pod_train.describe())
-print("------------------------------------------------")
 
 #find word count and store data as a matrix
-
 pod_train_count = cv.fit_transform(pod_train.values)
 
 #PRINT: how many times does a word show up
 #print(pod_train_count.toarray())
-print("------------------------------------------------")
 
 #train model
 model = MultinomialNB()
@@ -46,14 +33,16 @@ pickle.dump(model, open("spam.pkl", "wb"))
 pickle.dump(cv, open("vectorizer.pkl", "wb"))
 clf = pickle.load(open("spam.pkl", "rb"))
 
-#message for prediction
-msg = ["hi i am a nigerian prince please be my nigerian princess click here for money"]
+#test message for prediction
+msg = ["urgent click here to get 1000€"]
 msg_count = cv.transform(msg)
 result = model.predict(msg_count)
 
-print("Result of prediction")
+print("Message:")
+print(msg)
+print("Result of prediction:")
 print(result)
-print("------------------------------------------------")
+print("----------------------------")
 
 #test model
 pod_test_count = cv.transform(pod_test)
@@ -70,13 +59,3 @@ spam_percent = result_probs[1] * 100
 ham_percent = result_probs[0] * 100
 print(f"Spam percentage: {spam_percent:.2f} %")
 print(f"Ham percentage: {ham_percent:.2f} %")
-
-def predictSpam(message):
-    #message = parse(message) to se se more menda napisat sam mogoce tud ne glede na to kak bo se bral mail
-    email_spam1 = ["meeting reward click"]
-    email_spam_count1 = cv.transform(email_spam1)
-    email_spam_test_probs1 = model.predict_proba(email_spam_count1)[0]
-    spam_percent1_1 = email_spam_test_probs1[1] * 100
-    ham_percent1_1 = email_spam_test_probs1[0] * 100
-    return spam_percent1_1, ham_percent1_1
-
